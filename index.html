@@ -98,9 +98,8 @@ html,body{height:100%;overflow:hidden;background:#050C1E}
   background:linear-gradient(120deg,rgba(0,118,255,.95),rgba(0,100,220,.9) 58%,rgba(0,70,166,.95))}
 .card.trial .tx{display:block;flex:1;min-width:0}
 /* no number column here, so the copy runs flush to the left edge */
-.card.trial .ch{color:var(--yellow);margin:0 0 13px}
-.card.trial h2{font-size:38px;white-space:normal;text-wrap:balance}
-.card.trial p{margin:13px 0 0;color:#DCEAFF}
+.card.trial h2{font-size:38px;white-space:normal;text-wrap:balance;color:var(--yellow)}
+.card.trial p{margin:15px 0 0;color:#fff}
 /* the opt-in QR sits on a white tile so the code keeps its quiet zone */
 .card.trial .qr{flex:none;display:flex;flex-direction:column;align-items:center;gap:10px}
 .card.trial .qr img{display:block;width:176px;height:176px;background:#fff;border-radius:13px;padding:9px;
@@ -112,12 +111,9 @@ html,body{height:100%;overflow:hidden;background:#050C1E}
 .trialpg{flex:1;min-height:0;display:flex;flex-direction:column;padding:44px 60px 40px;overflow:hidden}
 .trialpg .thero{flex:none;display:flex;align-items:center;gap:44px;margin:0 0 32px}
 .trialpg .tt{flex:1;min-width:0}
-.trialpg .tt .ch{display:block;font-size:19px;font-weight:800;letter-spacing:.14em;
-  color:var(--yellow);text-transform:uppercase;margin:0 0 14px}
 .trialpg h2{margin:0;font-family:var(--display);font-size:60px;font-weight:700;
-  letter-spacing:-.03em;line-height:1.08;color:#fff;text-wrap:balance}
-.trialpg h2 em{font-style:normal;color:var(--cyan)}
-.trialpg .tt p{margin:20px 0 0;font-size:27px;line-height:1.4;color:#CFE0FA;max-width:34ch}
+  letter-spacing:-.03em;line-height:1.08;color:var(--yellow);text-wrap:balance}
+.trialpg .tt p{margin:22px 0 0;font-size:27px;line-height:1.4;color:#fff;max-width:34ch}
 .trialpg .tqr{flex:none;width:300px;display:flex;flex-direction:column;align-items:center;
   background:rgba(0,20,74,.66);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:24px 20px}
 .trialpg .tqr img{display:block;width:252px;height:252px;background:#fff;border-radius:16px;padding:12px;
@@ -126,8 +122,10 @@ html,body{height:100%;overflow:hidden;background:#050C1E}
 .trialpg .tlist{flex:1;min-height:0;display:flex;flex-direction:column;gap:16px}
 .trialpg .it{flex:1;display:flex;align-items:center;gap:30px;
   background:rgba(0,20,74,.64);border:1px solid rgba(255,255,255,.13);border-radius:22px;padding:24px 34px}
-.trialpg .it .n{flex:none;width:18px;height:18px;border-radius:50%;background:var(--cyan);
-  box-shadow:0 0 0 7px rgba(51,224,255,.15)}
+.trialpg .it .n{flex:none;width:62px;height:62px;border-radius:50%;background:var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:27px;font-weight:800;letter-spacing:-.02em;
+  line-height:1;color:#00252F;box-shadow:0 0 0 8px rgba(51,224,255,.13)}
 .trialpg .it .c{flex:1;min-width:0}
 .trialpg .it b{display:block;font-family:var(--display);font-size:31px;font-weight:700;
   letter-spacing:-.02em;color:#fff;line-height:1.18}
@@ -695,32 +693,31 @@ mark.soft[data-sig].on{background:rgba(255,206,41,.6);box-shadow:inset 0 0 0 1.5
   <section class="trialpg" id="trialpg" hidden>
     <div class="thero">
       <div class="tt">
-        <span class="ch">30-day free trial</span>
-        <h2>Stay ahead of scams with <em>CelcomDigi MobileSHIELD</em></h2>
-        <p>Scan the code to opt in. Here is what happens next.</p>
+        <h2>Stay ahead of scams with CelcomDigi MobileSHIELD</h2>
+        <p>First 30 days on us. RM10/month thereafter. Cancel anytime.</p>
       </div>
       <div class="tqr">
-        <img src="data:image/png;base64,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" alt="QR code: opt in to the MobileSHIELD 30-day free trial">
-        <span class="qcap">Scan to start</span>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAABLKADAAQAAAABAAABLAAAAADYYILnAAAOv0lEQVR4Ae3d0W4kKRIF0PZq//+Xa12jlSVL7bx4Asig6syTbZIgOKSu8gH1fDw+//vjPwIECBwg8J8DetQiAQIE/hEQWF4EAgSOERBYxxyVRgkQEFjeAQIEjhEQWMcclUYJEBBY3gECBI4REFjHHJVGCRAQWN4BAgSOERBYxxyVRgkQEFjeAQIEjhEQWMcclUYJEBBY3gECBI4REFjHHJVGCRAQWN4BAgSOERBYxxyVRgkQEFjeAQIEjhEQWMcclUYJEBBY3gECBI4REFjHHJVGCRAQWN4BAgSOERBYxxyVRgkQEFjeAQIEjhEQWMcclUYJEBBY3gECBI4REFjHHJVGCRAQWN4BAgSOERBYxxyVRgkQEFjeAQIEjhEQWMcclUYJEBBY3gECBI4REFjHHJVGCRAQWN4BAgSOEfhvh04/Pj46tLG0h8fjUapfNVq9frV+Cef/k6tGqYe0x9Xrp/52jCeD1T34wlotrD4BAtMEBNY0SoUIEFgtILBWC6tPgMA0AYE1jVIhAgRWCwis1cLqEyAwTUBgTaNUiACB1QICa7Ww+gQITBNocQ8r7ebuux+pv+f46js4VYNqf9X1Rwyrz6Qek0Gav7q/av0Z85PRjDUqNXxhVfTMJUBgq4DA2sptMQIEKgICq6JnLgECWwUE1lZuixEgUBEQWBU9cwkQ2CogsLZyW4wAgYqAwKromUuAwFaBI+5hJZHVd0dW38957u/uPVTXr85PZ/wcT+eQekjzR3pY/UzaQ3X9Ewyu9ugL60rHGAECrQQEVqvj0AwBAlcCAutKxxgBAq0EBFar49AMAQJXAgLrSscYAQKtBARWq+PQDAECVwIC60rHGAECrQRe4h5WK9FFzVTvz6y+3zNj22mPaQ9pfupxdf20vvEs4AsrG3mCAIEmAgKryUFogwCBLCCwspEnCBBoIiCwmhyENggQyAICKxt5ggCBJgICq8lBaIMAgSwgsLKRJwgQaCLgHlaTg0h3iKp3hFL9KsNI/bSHNJ7WSPPTHlP9NN/4egFfWOuNrUCAwCQBgTUJUhkCBNYLCKz1xlYgQGCSgMCaBKkMAQLrBQTWemMrECAwSUBgTYJUhgCB9QICa72xFQgQmCTwEvew3uH+THWP1TtK6X2r9vesX61RnZ/2uGP8Ffaw0skX1kpdtQkQmCogsKZyKkaAwEoBgbVSV20CBKYKCKypnIoRILBSQGCt1FWbAIGpAgJrKqdiBAisFBBYK3XVJkBgqoDAmsqpGAECKwWOuDi6+tLjSuDR2mmP6UJh9/lPh9P3kPpPZ53OKM03/uePLyxvAQECxwgIrGOOSqMECAgs7wABAscICKxjjkqjBAgILO8AAQLHCAisY45KowQICCzvAAECxwh8fN4teRzTrUb/tUD1DlCH16S6h4TXYY+px3cf94X17m+A/RM4SEBgHXRYWiXw7gIC693fAPsncJCAwDrosLRK4N0FBNa7vwH2T+AgAYF10GFplcC7Cwisd38D7J/AQQJH/HtYVc/q/Z2R+zmr1+hev3pGI/NHzuGqTtXwqvauseoeqoa79vnTOr6wfpLxdwIE2gkIrHZHoiECBH4SEFg/yfg7AQLtBARWuyPREAECPwkIrJ9k/J0AgXYCAqvdkWiIAIGfBATWTzL+ToBAO4GXuIeV7qZU756k+s9TTWukGml8df0db2Z1j6nHVD/N7zCe9pDeg7SH1fXT+tVxX1hVQfMJENgmILC2UVuIAIGqgMCqCppPgMA2AYG1jdpCBAhUBQRWVdB8AgS2CQisbdQWIkCgKiCwqoLmEyCwTaDFPax0N6SqkepX77Y8+6uukeZXDTrMT86rDdL6yWh1f2n953jqIe0xjY/0cOczvrDu1Lc2AQK/EhBYv+LyMAECdwoIrDv1rU2AwK8EBNavuDxMgMCdAgLrTn1rEyDwKwGB9SsuDxMgcKeAwLpT39oECPxK4OPzXsbjVzNueLh69yTNn7GlxJh6ePX5M4yrhjN6WF3j7j3evX7y9YWVhIwTINBGQGC1OQqNECCQBARWEjJOgEAbAYHV5ig0QoBAEhBYScg4AQJtBARWm6PQCAECSUBgJSHjBAi0ETji38NKd5SSZpqf7p6k+s/xVKPaw+r5I3tc/cxqw9X9p/rpDJ/z0zOrjdL6aY+rx31hrRZWnwCBaQICaxqlQgQIrBYQWKuF1SdAYJqAwJpGqRABAqsFBNZqYfUJEJgmILCmUSpEgMBqAYG1Wlh9AgSmCbS4h1XdTbqbkuqnuycj9as1qvPTHlePzzBabZDqV41GDNIaqUbaw93z0/6q476wqoLmEyCwTUBgbaO2EAECVQGBVRU0nwCBbQICaxu1hQgQqAoIrKqg+QQIbBMQWNuoLUSAQFVAYFUFzSdAYJvAS9zD2qZ1sVC6/3Ix9Z+hNL96/2b1+qn+yHjVIK2R6qf56QzS+Mj61Rppftpj93FfWN1PSH8ECHwJCKwvCj8QINBdQGB1PyH9ESDwJSCwvij8QIBAdwGB1f2E9EeAwJeAwPqi8AMBAt0FBFb3E9IfAQJfAgLri8IPBAh0F/j4vGj2uLvJkQt1Vz1Wt1Bd/9lbtYer/T3Hqj126G91D6sNU/0Z+6ue844e0xorx31hrdRVmwCBqQICayqnYgQIrBQQWCt11SZAYKqAwJrKqRgBAisFBNZKXbUJEJgqILCmcipGgMBKAYG1UldtAgSmCrS4hzV1R38plu627Lg/M2ONv2xt2p+S0bSFLgolo9Rjmn+x9NDQ3es/m1zdw+r6Q9AXD/nCusAxRIBALwGB1es8dEOAwIWAwLrAMUSAQC8BgdXrPHRDgMCFgMC6wDFEgEAvAYHV6zx0Q4DAhYDAusAxRIBAL4EW/yPVu+9+pPVHjizdAUprpPkjPdz5zEj/ySD1P7LGVY20frX+1dqjY6nHVCfNT3tM42n91eO+sFYLq0+AwDQBgTWNUiECBFYLCKzVwuoTIDBNQGBNo1SIAIHVAgJrtbD6BAhMExBY0ygVIkBgtYDAWi2sPgEC0wRa3MNKu6neLUn10/jI3ZRqj2l+6nH1eDKY0X+qkXq422D1+iP1q0bdz8AX1shb4BkCBFoICKwWx6AJAgRGBATWiJJnCBBoISCwWhyDJggQGBEQWCNKniFAoIWAwGpxDJogQGBEQGCNKHmGAIEWAkfcw7pbKt1NefZXvf+S5qce0vxkmOqn+SPjqcfUQxpPPVTXT/V3jL/CHipOvrAqeuYSILBVQGBt5bYYAQIVAYFV0TOXAIGtAgJrK7fFCBCoCAisip65BAhsFRBYW7ktRoBARUBgVfTMJUBgq8BL3MOq3s9J4unuy3N+6mGkxlUfaX5a/6r2KWPJ4JR9VPqsnnMyrNav7G1kri+sESXPECDQQkBgtTgGTRAgMCIgsEaUPEOAQAsBgdXiGDRBgMCIgMAaUfIMAQItBARWi2PQBAECIwICa0TJMwQItBD4+LyX8WjRyZs30f3+y4zjWf2qJcO0fnX+DKPUQ3WNZFCtv3q+L6zVwuoTIDBNQGBNo1SIAIHVAgJrtbD6BAhMExBY0ygVIkBgtYDAWi2sPgEC0wQE1jRKhQgQWC0gsFYLq0+AwDSBFv8e1uq7J9O0CoVW339J9ZNxdf4ITbWHkTWunknrX80dGUv1k/HIGqlG6mFkjc7P+MLqfDp6I0Dgm4DA+sbhFwIEOgsIrM6nozcCBL4JCKxvHH4hQKCzgMDqfDp6I0Dgm4DA+sbhFwIEOgsIrM6nozcCBL4JtLiH9a2jv/yS7p78Zcr2P1Xvv6Q9VutvB1mwYHeDdIYzSJJB6iHNTz2m+ml+ddwXVlXQfAIEtgkIrG3UFiJAoCogsKqC5hMgsE1AYG2jthABAlUBgVUVNJ8AgW0CAmsbtYUIEKgKCKyqoPkECGwTEFjbqC1EgEBV4IiLo2mT1ctwqf6Oy3Ld95AMZvRfrbG6x2p/6T0bGU97HKlx9czq+ldrj4z5whpR8gwBAi0EBFaLY9AEAQIjAgJrRMkzBAi0EBBYLY5BEwQIjAgIrBElzxAg0EJAYLU4Bk0QIDAiILBGlDxDgEALgZe4h9VCcnETq+/H7LhjlPawuoe0/uIj/DOyv7t7XG1Qre8LqypoPgEC2wQE1jZqCxEgUBUQWFVB8wkQ2CYgsLZRW4gAgaqAwKoKmk+AwDYBgbWN2kIECFQFBFZV0HwCBLYJuIe1jfp6oer9m5E7Ptcd1EZH+q/2OLJGZRcd+qv2UNn/c25af/UZpP59YSUh4wQItBEQWG2OQiMECCQBgZWEjBMg0EZAYLU5Co0QIJAEBFYSMk6AQBsBgdXmKDRCgEASEFhJyDgBAm0EXuIe1t13Q3acZrofk3qoGlXXT/2NjFd7SAZpfKTHq2dG6lf3eLX+cyz1sHr91F8a94WVhIwTINBGQGC1OQqNECCQBARWEjJOgEAbAYHV5ig0QoBAEhBYScg4AQJtBARWm6PQCAECSUBgJSHjBAi0Efj4vJfxuLub7nc/ZvjczVw1Tv2P1K/WqM6fcY5XNXb0l9a46u8VxnxhvcIp2gOBNxEQWG9y0LZJ4BUEBNYrnKI9EHgTAYH1JgdtmwReQUBgvcIp2gOBNxEQWG9y0LZJ4BUEBNYrnKI9EHgTgRb3sN7E2jYJECgK+MIqAppOgMA+AYG1z9pKBAgUBQRWEdB0AgT2CQisfdZWIkCgKCCwioCmEyCwT0Bg7bO2EgECRQGBVQQ0nQCBfQICa5+1lQgQKAoIrCKg6QQI7BMQWPusrUSAQFFAYBUBTSdAYJ+AwNpnbSUCBIoCAqsIaDoBAvsEBNY+aysRIFAUEFhFQNMJENgnILD2WVuJAIGigMAqAppOgMA+AYG1z9pKBAgUBQRWEdB0AgT2CQisfdZWIkCgKCCwioCmEyCwT0Bg7bO2EgECRQGBVQQ0nQCBfQICa5+1lQgQKAoIrCKg6QQI7BMQWPusrUSAQFFAYBUBTSdAYJ+AwNpnbSUCBIoCAqsIaDoBAvsEBNY+aysRIFAUEFhFQNMJENgn8D+W2i90ObqKEwAAAABJRU5ErkJggg==" alt="QR code: subscribe to MobileSHIELD with 30 days free">
+        <span class="qcap">Subscribe now</span>
       </div>
     </div>
 
     <div class="tlist">
-      <div class="it"><span class="n" aria-hidden="true"></span><div class="c">
-        <b>If you have the CelcomDigi App</b>
-        <p>The code opens the Safety listing page in the app, where you choose the MobileSHIELD 1-, 3- or 5-device option.</p>
+      <div class="it"><span class="n">01</span><div class="c">
+        <b>Scams can reach you anywhere</b>
+        <p>Scammers are finding more ways to reach you through your phone, from calls and messages to fake links and websites.</p>
       </div></div>
-      <div class="it"><span class="n" aria-hidden="true"></span><div class="c">
-        <b>If you do not have the app</b>
-        <p>The code opens the CelcomDigi web experience, where you verify your mobile number and subscribe to MobileSHIELD directly.</p>
+      <div class="it"><span class="n">02</span><div class="c">
+        <b>Stay protected with MobileSHIELD</b>
+        <p>CelcomDigi MobileSHIELD helps protect you from digital threats and scams, while safeguarding your privacy and digital identity.</p>
       </div></div>
-      <div class="it"><span class="n" aria-hidden="true"></span><div class="c">
-        <b>Your 30 days free</b>
-        <p>The free 30-day trial starts on subscription for first-time MobileSHIELD subscribers. After the trial it auto-renews at <span class="px">RM10/month</span>, and you can cancel anytime.</p>
+      <div class="it"><span class="n">03</span><div class="c">
+        <b>Get your first 30 days on us</b>
+        <p>Subscribe to MobileSHIELD now with your first 30 days free for first-time users. <span class="px">RM10/month</span> thereafter. Cancel anytime.</p>
       </div></div>
-      <div class="it"><span class="n" aria-hidden="true"></span><div class="c">
-        <b>Who can subscribe</b>
-        <p>MobileSHIELD is currently available to CelcomDigi subscribers only.</p>
+      <div class="it"><span class="n">04</span><div class="c">
+        <b>Activate your protection</b>
+        <p>Install the MobileSHIELD app, log in and activate your digital protection. Strengthen your mobile security today.</p>
       </div></div>
     </div>
 
@@ -1441,13 +1438,12 @@ function buildCards(){
   t.type = 'button';
   t.className = 'card trial';
   t.innerHTML = `<span class="tx">
-      <span class="ch">30-DAY FREE TRIAL</span>
       <h2>Stay ahead of scams with CelcomDigi MobileSHIELD.</h2>
-      <p>Scan the code to opt in, or tap for the full details.</p>
+      <p>First 30 days on us. RM10/month thereafter. Cancel anytime. Tap for details.</p>
     </span>
     <span class="qr">
-      <img src="${QR}" alt="QR code: opt in to the MobileSHIELD 30-day free trial">
-      <span class="qcap">Scan to start</span>
+      <img src="${QR}" alt="QR code: subscribe to MobileSHIELD with 30 days free">
+      <span class="qcap">Subscribe now</span>
     </span>`;
   t.onclick = showTrial;
   wrap.appendChild(t);
