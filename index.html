@@ -200,7 +200,7 @@ html,body{height:100%;overflow:hidden;background:#050C1E}
   color:#8AA6D6;text-align:center;text-wrap:balance}
 
 /* ===== caption under the phone ===== */
-.cap{flex:none;position:relative;z-index:1;width:100%;max-width:920px;height:259px;display:flex;flex-direction:column;
+.cap{flex:none;position:relative;z-index:1;width:100%;max-width:920px;height:280px;display:flex;flex-direction:column;
   align-items:center;justify-content:flex-start;text-align:center;gap:12px;overflow:visible}
 .cap.anim{animation:capIn .5s cubic-bezier(.22,1,.36,1) .26s both}
 @keyframes capIn{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:none}}
@@ -932,7 +932,7 @@ const S=[
    screen:c=>({shell:'wa',title:'+60 11-4802 7731',av:'PG',sub:'last seen today at 13:58',wa:true,body:
      `<div class="wa-b"><b>ParcelGo Delivery</b><br>Your parcel delivery is on hold due to an outstanding delivery fee of RM2.80. Please complete payment through the link below to arrange delivery.<br><span class="lk"${c.sheet?'':' data-tap="A"'}><mark class="soft">parcelgo-delivery.top</mark>/pay</span><div class="tm">14:07</div></div>
      <p style="font-size:11px;color:#6B7680;text-align:center;margin:13px 0 0"><mark class="soft">Unknown number · not in your contacts</mark></p>`
-     + (c.sheet ? ASK('This link asks for a payment. What now?','Pay the RM 2.80 now','Check with the courier myself') : '')}),
+     + (c.sheet ? ASK('This link asks for a payment. What would you do?','Pay the RM 2.80 now','Check with the courier myself') : '')}),
    taps:[{id:'A',to:{off:'pay',on:'blocked'}},{id:'B',to:'safe'},{id:'X',to:'@dismiss'}],
    ex:"Nothing is checked yet. What matters is what you do with the link.",
    fn:"<b>ParcelGo</b> is invented. Under RM 5 is where people stop weighing it."},
@@ -965,9 +965,8 @@ const S=[
    fn:"A real RM 2.80 charge would never need a one-time code."},
 
   loss:{stage:2,end:true,pair:{on:'blocked',off:'loss'},
-   panel:{kind:'bad',cl:'WHAT HAPPENED',h:"The delivery fee was the bait",
-     p:"Those card details can fund payments you never made.",
-     pain:"When you are busy, paying beats checking.",
+   panel:{kind:'bad',cl:'WHAT HAPPENED:',h:"The small delivery fee was a trap.",
+     p:"Scammers store your card details to make unauthorised purchases later. When you're in a rush, it's easy to pay without verifying.",
      flip:"Flip the switch on to see it protected."},
    screen:{shell:'lock',body:
      notif('bank','Payment approved','RM 1,840.00 to PAY*DIGITAL. Card ending 8823.','now')
@@ -1160,7 +1159,7 @@ const S=[
      <div class="stockbar"><span class="dot"></span><mark class="soft">Only <b>1</b> left in stock</mark></div>
      <div style="background:#FFF1EE;border:1px solid #F2CFCA;border-radius:8px;padding:6px;text-align:center;font-size:11px;font-weight:700;color:#B3271A;margin-bottom:9px">Clearance ends in 04:52</div>
      ${c.sheet?'':'<div class="cta shop" data-tap="A">Buy now</div>'}</div>`
-     + (c.sheet ? ASK('One pair left, five minutes on the clock. What now?','Buy it now before it goes','Check the retailer first') : '')}),
+     + (c.sheet ? ASK('One pair left, five minutes on the clock. What would you do?','Buy it now before it goes','Check the retailer first') : '')}),
    taps:[{id:'A',to:{off:'checkout',on:'blocked'},fill:false},{id:'B',to:'safe',fill:false},{id:'X',to:'@dismiss'}],
    ex:"Scarcity and a countdown leave no room for the check that would settle it.",
    fn:"Shopping Protection rates a site 1 to 5 on age, redirects, certificate and reviews."},
@@ -1273,7 +1272,7 @@ const S=[
    screen:c=>({shell:'wa',title:'+60 17-2298 4410',av:'?',sub:'not in your contacts',wa:true,body:
      `<div class="wa-b">Is this you in this photo? \u{1F440}<br><span class="lk"${c.sheet?'':' data-tap="A"'}><mark class="soft">photo-tag.link</mark>/v?id=8f21</span><div class="tm">11:32</div></div>
       <p style="font-size:11px;color:#6B7680;text-align:center;margin:13px 0 0"><mark class="soft">Unknown number &middot; not in your contacts</mark></p>`
-     + (c.sheet ? ASK('A link from someone you do not know. What now?','Open the link','Delete the message') : '')}),
+     + (c.sheet ? ASK('A link from someone you do not know. What would you do?','Open the link','Delete the message') : '')}),
    taps:[{id:'A',to:{off:'open',on:'tunnel'},fill:false},{id:'B',to:'safe',fill:false},{id:'X',to:'@dismiss'}],
    ex:"Curiosity is the lure. The message does not ask for money or a password, so it does not feel like a scam \u2014 and that is the point.",
    fn:"Link-tracking pages are sold as a service. The link does nothing visible; its only job is to record whoever opens it."},
@@ -1391,7 +1390,7 @@ pn.open.ex = 'Even an empty page may log connection and browser details when it 
 
 /* ===== state ===== */
 const $ = id => document.getElementById(id);
-const PH_W = 288, PH_H = 605, CAP_RESERVE = 259;
+const PH_W = 288, PH_H = 605, CAP_RESERVE = 280;
 let si = -1, node = null, hist = [], sheet = true, sig = null;
 let prot = false, sweepT = null;
 let typeTimers = [], armTimers = [], typing = false, skipFn = null;
