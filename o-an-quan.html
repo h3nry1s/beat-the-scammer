@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ô ăn quan — 2 người chơi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E8DD; --ink:#2A2620; --muted:#6B655A;
+  --lacquer:#5B1F17; --lacquer-2:#6E2A1F; --gold:#C9A45C; --gold-soft:rgba(201,164,92,.35);
+  --p1:#2F6B5A; --p2:#3B4A8C; --panel:#F3F4EE; --line:#C7CBBE;
+  --stone-a:#D9D4C7; --stone-b:#A8A196; --quan:#1F3B33;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1B1A17; --ink:#ECE6D8; --muted:#A49C8C;
+    --lacquer:#3E1510; --lacquer-2:#4C1C15; --gold:#D8B46A; --gold-soft:rgba(216,180,106,.3);
+    --p1:#5FB49A; --p2:#8696E0; --panel:#24221E; --line:#3A3731;
+    --stone-a:#D6D0C2; --stone-b:#9C9588; --quan:#2E5A4E;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.5;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 14px 40px}
+h1{font-family:"Noto Serif",Georgia,serif;font-weight:700;font-size:clamp(2rem,5vw,3rem);margin:0;letter-spacing:.01em}
+.sub{color:var(--muted);margin:2px 0 20px;font-size:.95rem}
+.wrap{width:100%;max-width:880px}
+.player{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;border-radius:10px;
+  background:var(--panel);border:2px solid transparent;transition:border-color .25s}
+.player.active{border-color:var(--pc)}
+.player .name{font-weight:600;color:var(--pc);display:flex;align-items:center;gap:8px}
+.player .dot{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.player .score{font-family:"Noto Serif",Georgia,serif;font-size:1.6rem;font-weight:700}
+.player .detail{color:var(--muted);font-size:.85rem}
+.player .turn-tag{font-size:.8rem;color:var(--pc);visibility:hidden}
+.player.active .turn-tag{visibility:visible}
+#pl1{--pc:var(--p1)} #pl2{--pc:var(--p2)}
+
+.board{margin:14px 0;display:grid;grid-template-columns:1.35fr repeat(5,1fr) 1.35fr;grid-template-rows:1fr 1fr;
+  background:var(--lacquer);border-radius:14px;padding:14px;gap:0;
+  box-shadow:inset 0 0 0 3px var(--gold-soft), inset 0 0 40px rgba(0,0,0,.35)}
+.cell{position:relative;aspect-ratio:1/1;border:2px solid var(--gold);margin:-1px;background:var(--lacquer-2);
+  cursor:default;transition:background .2s}
+.cell.quan{aspect-ratio:auto;grid-row:1 / span 2}
+#c0{border-radius:999px 0 0 999px}
+#c6{border-radius:0 999px 999px 0}
+.cell.own{cursor:pointer}
+.cell.own:hover{background:#7a3426}
+.cell.sel{background:#84402F}
+.cell.pulse{background:#8C4A35}
+.cell.cap{animation:cap .5s}
+@keyframes cap{0%{background:var(--gold)}100%{background:var(--lacquer-2)}}
+.cell:focus-visible{outline:3px solid var(--gold);outline-offset:-6px}
+.pebble{position:absolute;width:13%;aspect-ratio:1/1;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,var(--stone-a),var(--stone-b));box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.quan .pebble{width:11%}
+.bigstone{position:absolute;left:50%;top:50%;width:44%;aspect-ratio:1/1;transform:translate(-30%,-50%);border-radius:48% 52% 45% 55%;
+  background:radial-gradient(circle at 35% 30%,#5d8f80,var(--quan));box-shadow:0 2px 6px rgba(0,0,0,.6)}
+#c6 .bigstone{transform:translate(-70%,-50%)}
+.count{position:absolute;bottom:4px;right:7px;font-size:.8rem;font-weight:600;color:var(--gold)}
+.quan .count{bottom:10px;right:auto;left:50%;transform:translateX(-50%);font-size:.9rem}
+.arrows{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:4px;z-index:2}
+.arrows button{width:42%;aspect-ratio:1/1;border:none;border-radius:50%;background:var(--gold);color:var(--lacquer);
+  font-size:clamp(.9rem,2.6vw,1.4rem);font-weight:700;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.arrows button:hover{filter:brightness(1.1)}
+.arrows button:focus-visible{outline:3px solid #fff}
+
+.status{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 8px}
+#msg{font-weight:600;min-height:1.5em}
+.controls{display:flex;gap:8px;align-items:center}
+select,.btn{font:inherit;font-size:.9rem;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#log{background:var(--panel);border-radius:10px;padding:10px 14px;height:140px;overflow:auto;font-size:.88rem;color:var(--muted)}
+#log p{margin:2px 0}
+#log p:first-child{color:var(--ink)}
+details{margin-top:14px;background:var(--panel);border-radius:10px;padding:10px 14px;font-size:.92rem}
+summary{cursor:pointer;font-weight:600}
+details li{margin:4px 0}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.overlay.show{display:flex}
+.modal{background:var(--panel);border-radius:14px;padding:26px 30px;max-width:380px;text-align:center}
+.modal h2{font-family:"Noto Serif",Georgia,serif;margin:0 0 8px;font-size:1.8rem}
+.modal p{margin:6px 0 18px;color:var(--muted)}
+@media (max-width:560px){ .board{padding:8px} .count{font-size:.68rem;right:4px} .player .score{font-size:1.3rem} }
+@media (prefers-reduced-motion: reduce){ .cell.cap{animation:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ô ăn quan</h1>
+  <p class="sub">Hai người chơi chung một máy. Người 1 giữ hàng dưới, người 2 giữ hàng trên.</p>
+
+  <div class="player" id="pl2">
+    <div><div class="name"><span class="dot"></span><span>Người chơi 2</span></div><div class="detail" id="d2"></div></div>
+    <span class="turn-tag">Đến lượt</span>
+    <div class="score" id="s2">0</div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <div class="player" id="pl1">
+    <div><div class="name"><span class="dot"></span><span>Người chơi 1</span></div><div class="detail" id="d1"></div></div>
+    <span class="turn-tag">Đến lượt</span>
+    <div class="score" id="s1">0</div>
+  </div>
+
+  <div class="status">
+    <div id="msg"></div>
+    <div class="controls">
+      <label for="speed" style="font-size:.9rem;color:var(--muted)">Tốc độ</label>
+      <select id="speed">
+        <option value="600">Chậm</option>
+        <option value="330" selected>Vừa</option>
+        <option value="140">Nhanh</option>
+      </select>
+      <button class="btn" id="newBtn">Ván mới</button>
+    </div>
+  </div>
+  <div id="log"></div>
+
+  <details>
+    <summary>Luật chơi</summary>
+    <ul>
+      <li>Bàn có 10 ô dân (mỗi ô 5 quân) và 2 ô quan ở hai đầu (mỗi ô 1 quan). Quân dân tính 1 điểm, quan tính 10 điểm.</li>
+      <li>Đến lượt, chọn một ô dân có quân ở hàng của mình, rồi chọn hướng rải. Bốc hết quân và rải mỗi ô một quân.</li>
+      <li>Rải hết, nếu ô kế tiếp là ô dân còn quân thì bốc lên rải tiếp. Nếu ô kế tiếp là ô quan còn quân thì mất lượt.</li>
+      <li>Nếu ô kế tiếp trống và ô sau nó có quân thì ăn hết ô đó. Sau đó nếu lại có một ô trống rồi một ô có quân thì ăn tiếp.</li>
+      <li>Hai ô trống liền nhau thì mất lượt.</li>
+      <li>Khi đến lượt mà cả 5 ô của mình trống, người chơi lấy 5 quân từ điểm của mình rải vào mỗi ô một quân. Không đủ thì vay của đối thủ, cuối ván trả lại.</li>
+      <li>Ván kết thúc khi cả hai ô quan đều hết quân. Quân còn trên hàng của ai thì người đó được. Ai nhiều điểm hơn thắng.</li>
+    </ul>
+  </details>
+</div>
+
+<div class="overlay" id="over">
+  <div class="modal">
+    <h2 id="winTitle"></h2>
+    <p id="winText"></p>
+    <button class="btn primary" id="againBtn">Chơi ván mới</button>
+  </div>
+</div>
+
+<script>
+// Vị trí 0: quan trái, 1–5: hàng trên (người 2, trái → phải), 6: quan phải, 7–11: hàng dưới (người 1, phải → trái).
+// Tăng chỉ số = đi theo chiều kim đồng hồ.
+const boardEl = document.getElementById('board');
+const logEl = document.getElementById('log');
+const msgEl = document.getElementById('msg');
+const speedEl = document.getElementById('speed');
+const NAMES = ['Người chơi 1','Người chơi 2'];
+
+let board, score, debt, turn, busy, selected, gameOver, gameId = 0;
+
+const isQuan = i => i === 0 || i === 6;
+const owner = i => (i >= 1 && i <= 5) ? 1 : (i >= 7 && i <= 11) ? 0 : -1;
+const isEmpty = i => board[i].d === 0 && !board[i].q;
+const val = i => board[i].d + (board[i].q ? 10 : 0);
+const step = (i, dir) => (i + dir + 12) % 12;
+const ownCells = p => p === 0 ? [7,8,9,10,11] : [1,2,3,4,5];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const delay = () => +speedEl.value;
+
+// Bố cục lưới: [hàng, cột]
+const POS = {0:[1,1],6:[1,7]};
+for (let i=1;i<=5;i++) POS[i]=[1,i+1];
+for (let i=7;i<=11;i++) POS[i]=[2,13-i]; // 11 ở cột 2, 7 ở cột 6
+
+function buildBoard(){
+  boardEl.innerHTML='';
+  for (let i=0;i<12;i++){
+    const c=document.createElement('div');
+    c.className='cell'+(isQuan(i)?' quan':'');
+    c.id='c'+i;
+    c.style.gridRow = isQuan(i) ? '1 / span 2' : POS[i][0];
+    c.style.gridColumn = POS[i][1];
+    c.addEventListener('click', e => onCellClick(i, e));
+    c.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){ e.preventDefault(); onCellClick(i,e);} });
+    boardEl.appendChild(c);
+  }
+}
+
+// Vị trí sỏi giả ngẫu nhiên nhưng cố định, để sỏi không nhảy lung tung khi vẽ lại
+function rnd(seed){ const x=Math.sin(seed*9301+49297)*233280; return x-Math.floor(x); }
+
+function render(active=-1){
+  for (let i=0;i<12;i++){
+    const c=document.getElementById('c'+i);
+    const cell=board[i];
+    let html='';
+    if (cell.q) html+='<div class="bigstone"></div>';
+    const shown=Math.min(cell.d, 24);
+    for (let k=0;k<shown;k++){
+      let x,y;
+      if (isQuan(i)){
+        x = (i===0?38:16) + rnd(i*97+k)*44; y = 12 + rnd(i*31+k*7)*68;
+      } else {
+        x = 10 + rnd(i*97+k)*66; y = 10 + rnd(i*31+k*7)*62;
+      }
+      html+=`<div class="pebble" style="left:${x}%;top:${y}%"></div>`;
+    }
+    const v = cell.d + (cell.q?10:0);
+    html+=`<span class="count">${cell.q ? (cell.d? `quan + ${cell.d}`:'quan') : cell.d}</span>`;
+    if (selected===i){
+      html+=`<div class="arrows"><button data-d="L" aria-label="Rải sang trái">◀</button><button data-d="R" aria-label="Rải sang phải">▶</button></div>`;
+    }
+    c.innerHTML=html;
+    const own = !busy && !gameOver && owner(i)===turn && cell.d>0;
+    c.classList.toggle('own', own);
+    c.classList.toggle('sel', selected===i);
+    c.classList.toggle('pulse', active===i);
+    c.tabIndex = own ? 0 : -1;
+    c.setAttribute('aria-label', isQuan(i) ? `Ô quan, ${v} điểm` : `Ô dân, ${cell.d} quân`);
+    if (selected===i){
+      c.querySelectorAll('.arrows button').forEach(b=>{
+        b.addEventListener('click', e=>{
+          e.stopPropagation();
+          const visualRight = b.dataset.d==='R';
+          // Hàng trên: phải = +1. Hàng dưới: phải = -1.
+          const dir = owner(i)===1 ? (visualRight?1:-1) : (visualRight?-1:1);
+          play(i, dir);
+        });
+      });
+    }
+  }
+  document.getElementById('s1').textContent=score[0];
+  document.getElementById('s2').textContent=score[1];
+  document.getElementById('d1').textContent = debt[0] ? `Đang nợ ${debt[0]} quân` : '';
+  document.getElementById('d2').textContent = debt[1] ? `Đang nợ ${debt[1]} quân` : '';
+  document.getElementById('pl1').classList.toggle('active', turn===0 && !gameOver);
+  document.getElementById('pl2').classList.toggle('active', turn===1 && !gameOver);
+}
+
+function log(t){
+  const p=document.createElement('p'); p.textContent=t;
+  logEl.prepend(p);
+}
+function setMsg(t){ msgEl.textContent=t; }
+
+function onCellClick(i){
+  if (busy || gameOver) return;
+  if (owner(i)===turn && board[i].d>0){
+    selected = (selected===i) ? null : i;
+    setMsg(selected===null ? `${NAMES[turn]}: chọn một ô để rải` : `${NAMES[turn]}: chọn hướng rải`);
+  } else {
+    selected=null;
+  }
+  render();
+}
+
+async function play(start, dir){
+  const myGame = gameId;
+  busy=true; selected=null;
+  const p=turn;
+  let hand=board[start].d; board[start].d=0;
+  let pos=start;
+  setMsg(`${NAMES[p]} đang rải…`);
+  log(`${NAMES[p]} bốc ${hand} quân, rải ${dir===1?'theo':'ngược'} chiều kim đồng hồ.`);
+  render(pos); await sleep(delay());
+
+  let gained=0;
+  outer: while (true){
+    while (hand>0){
+      pos=step(pos,dir); board[pos].d++; hand--;
+      render(pos); await sleep(delay());
+      if (myGame!==gameId) return;
+    }
+    const next=step(pos,dir);
+    if (isQuan(next) && !isEmpty(next)){
+      log('Gặp ô quan, mất lượt.'); break;
+    }
+    if (!isEmpty(next)){
+      hand=board[next].d; board[next].d=0; pos=next;
+      log(`Bốc tiếp ${hand} quân.`);
+      render(pos); await sleep(delay());
+      if (myGame!==gameId) return;
+      continue;
+    }
+    let target=step(next,dir);
+    if (isEmpty(target)){ log('Hai ô trống liền nhau, mất lượt.'); break; }
+    while (true){
+      const v=val(target), hadQuan=board[target].q;
+      score[p]+=v; gained+=v;
+      board[target]={d:0,q:false};
+      log(`Ăn ${hadQuan ? 'ô quan' : 'ô dân'}: +${v} điểm.`);
+      render(); const tc=document.getElementById('c'+target); tc.classList.remove('cap'); void tc.offsetWidth; tc.classList.add('cap');
+      await sleep(delay()*1.6);
+      if (myGame!==gameId) return;
+      const n2=step(target,dir), t2=step(n2,dir);
+      if (isEmpty(n2) && !isEmpty(t2)){ target=t2; continue; }
+      break outer;
+    }
+  }
+  if (gained) log(`${NAMES[p]} được ${gained} điểm lượt này.`);
+  busy=false;
+  if (isEmpty(0) && isEmpty(6)) return endGame();
+  turn=1-turn;
+  startTurn();
+}
+
+function startTurn(){
+  if (gameOver) return;
+  if (isEmpty(0) && isEmpty(6)) return endGame();
+  const cells=ownCells(turn);
+  if (cells.every(i=>board[i].d===0)){
+    const opp=1-turn;
+    const fromSelf=Math.min(score[turn],5);
+    const borrow=5-fromSelf;
+    if (borrow>0 && score[opp]<borrow){
+      log(`${NAMES[turn]} hết quân mà không đủ để rải lại. Kết thúc ván.`);
+      return endGame();
+    }
+    score[turn]-=fromSelf;
+    if (borrow>0){ score[opp]-=borrow; debt[turn]+=borrow; }
+    cells.forEach(i=>board[i].d=1);
+    log(`${NAMES[turn]} hết quân, rải lại 5 quân${borrow?` (vay ${borrow} của đối thủ)`:''}.`);
+  }
+  setMsg(`${NAMES[turn]}: chọn một ô để rải`);
+  render();
+}
+
+function endGame(){
+  gameOver=true; busy=false; selected=null;
+  for (const p of [0,1]){
+    const rest=ownCells(p).reduce((s,i)=>s+board[i].d,0);
+    if (rest){ score[p]+=rest; log(`${NAMES[p]} thu ${rest} quân còn trên hàng.`); }
+    ownCells(p).forEach(i=>board[i].d=0);
+  }
+  for (const p of [0,1]){
+    if (debt[p]){ score[p]-=debt[p]; score[1-p]+=debt[p]; log(`${NAMES[p]} trả nợ ${debt[p]} quân.`); debt[p]=0; }
+  }
+  render();
+  const [a,b]=score;
+  const title = a===b ? 'Hòa!' : `${NAMES[a>b?0:1]} thắng!`;
+  setMsg(title);
+  log(`Kết thúc: ${a} – ${b}.`);
+  document.getElementById('winTitle').textContent=title;
+  document.getElementById('winText').textContent=`Người chơi 1: ${a} điểm · Người chơi 2: ${b} điểm`;
+  document.getElementById('over').classList.add('show');
+}
+
+function newGame(){
+  gameId++;
+  board=[]; for (let i=0;i<12;i++) board.push({d:isQuan(i)?0:5, q:isQuan(i)});
+  score=[0,0]; debt=[0,0]; turn=0; busy=false; selected=null; gameOver=false;
+  logEl.innerHTML='';
+  document.getElementById('over').classList.remove('show');
+  log('Ván mới bắt đầu. Người chơi 1 đi trước.');
+  startTurn();
+}
+
+document.getElementById('newBtn').onclick=newGame;
+document.getElementById('againBtn').onclick=newGame;
+document.addEventListener('click', e=>{
+  if (selected!==null && !boardEl.contains(e.target)){ selected=null; render(); }
+});
+buildBoard();
+newGame();
+</script>
+</body>
+</html>
